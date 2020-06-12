@@ -5,6 +5,13 @@ namespace App\Command\Fetch;
 use App\Service\CrawlerService;
 use Minicli\Command\CommandController;
 
+/**
+ * ./minicrawler fetch
+ * This command will fetch from an "advices" API by default,
+ * or a URL provided with the url=value parameter. Contents are json_decoded before printed.
+ * Class DefaultController
+ * @package App\Command\Fetch
+ */
 class DefaultController extends CommandController
 {
 
@@ -14,7 +21,7 @@ class DefaultController extends CommandController
     public function handle()
     {
         $url = 'https://api.adviceslip.com/advice';
-        // ./minicli fetch url=blablabla
+
         if ($this->hasParam('url')) {
             $url = $this->getParam('url');
         }
@@ -22,6 +29,7 @@ class DefaultController extends CommandController
         /** @var CrawlerService $crawler */
         $crawler = $this->getApp()->crawler;
 
+        $this->getPrinter()->display("Fetching content...");
         $content = $crawler->fetch($url);
 
         if ($content['code'] == 200) {

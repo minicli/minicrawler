@@ -9,12 +9,12 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Minicli\App;
 use App\Service\CrawlerService;
+use App\Service\DBService;
 
-$app = new App([
-    'app_path' => __DIR__ . '/app/Command',
-    'theme' => '\Unicorn'
-]);
+$config = require_once(__DIR__ . '/config.php');
+$app = new App($config);
 
 $app->addService('crawler', new CrawlerService());
+$app->addService('db', new DBService());
 
 $app->runCommand($argv);
